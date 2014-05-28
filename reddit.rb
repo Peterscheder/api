@@ -1,31 +1,25 @@
 require 'rest-client'
 require 'json'
 
-puts "Hello! Welcome to Petitions!"
-puts "Search for petitions:"
+puts "Hello, whould you like to find out what categoray way_fairer posts most on reddit?"
 
-search = gets.strip
-offset = 0
+input = gets.strip 
+
 
 while true
 
 	puts "Loading results..."
 
-	puts
-
-	response = RestClient.get("https://api.whitehouse.gov/v1/petitions.json" + 
-		"?limit=5&offset=#{offset}&title=#{search}")
+	response = RestClient.get("http://reddit.com/users/way_fairer.json")
 
 	parsed_response = JSON.parse(response)
 
-	petitions = parsed_response["results"]
+	posts = parsed_response["results"]
 
-	petitions.each_with_index do |petition, index|
-		puts "#{offset+index+1}. #{petition["title"]}\n(SIGN HERE: #{petition["url"]})"
-		puts
+	posts.each_with_index do |category, link_title|
+		puts "#{index+1}. #{posts["title"]}"
+
 	end
-
-	offset += petitions.size
 
 	puts "Would you like to see more? (y or n)"
 
